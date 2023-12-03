@@ -1,0 +1,91 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    font-family: 'Poppins';
+    background: url('images/threatre.png') no-repeat center center fixed;
+    background-size: cover;
+    color: #ffffff;
+}
+
+.container{
+    max-width: 1280px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+ul, ol{
+    list-style-type: none;
+}
+
+a{
+    text-decoration: none;
+}
+
+header{
+    display: flex;
+    height: 104.19px;
+    align-items: center;
+    /* border-bottom: 1px solid; */
+    /* border-bottom-width: 1px; */
+    /* border-bottom-color: #d6dddf; */
+}
+
+.headerContent{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.menu{
+    width: 768px;
+    height: 30px;
+}
+
+.menu ul{
+    display: flex;
+    justify-content: left;
+}
+
+.menu li{
+    /* padding: 11px; */
+    font-weight: 700;
+    color: #000000;
+    padding-bottom: 8px;
+    font-size: 14px;
+    padding-right: 46px;
+}
+
+.menu a{
+    color: #ffffff;
+}
+
+.menu a:hover{
+    color: #FFEB37;
+}
+
+.search{
+    display: flex;
+    justify-content: center;
+    padding-top: 100px;
+}
+
+input[type="text"] {
+    padding: 12px;
+    width: 500px;
+    box-sizing: border-box;
+    border-radius: 100px;
+}
+
+.search-container{
+    position: relative;
+}
+
+.search-container i{
+    position: absolute;
+    margin-left: -32px;
+    color: #1a1a1a;
+    margin-top: 12px;
+}
