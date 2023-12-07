@@ -122,9 +122,16 @@ input[type="text"] {
     margin-left: 5%;
     gap: 2%;
     padding-top: 5%;
+    flex-basis:0;
   }
+.column:first-child {
+    flex: 1; /* Adjust this value for the first column to control its width */
+}
 
+.column:last-child {
+    flex: 2; /* Adjust this value for the second column to control its width */
+    padding: 20px;
+}
 .searchImage{
-    width: 70%;
-    height: 80%;
+    text-align: right;
 }
