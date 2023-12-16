@@ -52,7 +52,35 @@ const createSearchResultCard = (data)=>{
     `
     return [div,otherDiv]
 }
+const createModal= data => {
+    clearDiv('myModal')
+    console.log(data)
+    var modal = document.createElement('div');
+    modal.id = 'myModal';
+    modal.className = 'modal';
+    var modalContent = document.createElement('div');
+    modalContent.className = 'modal-content';
 
+    var closeButton = document.createElement('span');
+    closeButton.className = 'close';
+    closeButton.innerHTML = '&times;';
+
+    var modalText = document.createElement('p');
+    modalText.innerHTML = data['name'];
+
+    
+    modalContent.appendChild(closeButton);
+    modalContent.appendChild(modalText);
+    modal.appendChild(modalContent);
+    document.getElementById('modalContainer').appendChild(modal);
+
+     modal.style.display = 'block';
+  
+
+    closeButton.addEventListener('click', function() {
+      modal.style.display = 'none';
+    });
+  }
 const movieSearchForm = ()=>{
     const movieSearch = document.getElementById("movie-search");
     movieSearch.onsubmit = async (e)=>{
@@ -86,11 +114,12 @@ const movieSearchForm = ()=>{
                 const card = createCard(`<h4><b>${cast['name']}</b></h4>\n<p>Character: ${cast['character']}</p>`,cast['profile']);
                 card.id= cast['id'];
                 castCard.append(card);
-                // castCard.onclick = async ()=>{
-                //     const res = await fetch(`${baseURL}/api/cast/details/${cardId}`);
-                //     const output = (await res.json())['data'];
-                //     console.log(output)
-                // }
+                castCard.onclick = async (e)=>{
+                   // console.log(e.target.parentNode.id)
+                    const res = await fetch(`${baseURL}/api/cast/details/${e.target.parentNode.id}`);
+                    const output = (await res.json())['data'];
+                    createModal(output)
+                }
             })
 
             const recommendCard = document.getElementById("recommend");
