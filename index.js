@@ -53,8 +53,8 @@ const createSearchResultCard = (data)=>{
     return [div,otherDiv]
 }
 const createModal= data => {
-    clearDiv('myModal')
-    console.log(data)
+    clearDiv('modalContainer')
+    console.log(data);
     var modal = document.createElement('div');
     modal.id = 'myModal';
     modal.className = 'modal';
@@ -65,12 +65,39 @@ const createModal= data => {
     closeButton.className = 'close';
     closeButton.innerHTML = '&times;';
 
-    var modalText = document.createElement('p');
-    modalText.innerHTML = data['name'];
+    var modalInnerDiv = document.createElement('div');
+    modalInnerDiv.id = "modal-inner-div";
 
+    var modalImageDiv = document.createElement('div');
+    modalImageDiv.id="modal-image-div";
+
+    var image = document.createElement('img');
+    image.src = data['profile_path'];
+    image.height = "450";
+
+    modalImageDiv.appendChild(image);
+
+    var modalInfoDiv = document.createElement('div');
+    modalInfoDiv.id = "modal-info-div";
+
+    var deathday = data['deathday']?`<p>Deathday: ${data['deathday']}</p><br/>`:""
+
+    modalInfoDiv.innerHTML =`
+        <p>Name: ${data['name']}</p>
+        <br/>
+        <p>Birthday: ${data['birthday']}</p>
+        <br/>
+        ${deathday?deathday:""}
+        <p>Place of Birth: ${data['place_of_birth']}</p>
+        <br/>
+        <p>Biography: ${data['biography']}</p>
+        <br/>
+    `;
+    modalInnerDiv.appendChild(modalImageDiv);
+    modalInnerDiv.appendChild(modalInfoDiv);
     
     modalContent.appendChild(closeButton);
-    modalContent.appendChild(modalText);
+    modalContent.appendChild(modalInnerDiv);
     modal.appendChild(modalContent);
     document.getElementById('modalContainer').appendChild(modal);
 
@@ -86,22 +113,25 @@ const movieSearchForm = ()=>{
     movieSearch.onsubmit = async (e)=>{
         e.preventDefault();
         const movie = document.getElementById("search").value;
-
+        document.getElementById("loader").style.display = "block";
         //Get Recommendation for given movie
         const response = await fetch(`${baseURL}/api/movie/similar/${movie}`);
         const data = await response.json()
+        
         if(response.status===400)
         {
+            document.getElementById("loader").style.display = "none";
             window.alert(data['message'])
         }
         else{
             clearDiv("searchResult");
             clearDiv("cast");
             clearDiv("recommend");
+            
 
             const res = await fetch(`${baseURL}/api/movie/details/${movie}`);
             const output = (await res.json())['data'];
-            
+            document.getElementById("loader").style.display = "none";
             const searchResult = document.getElementById("searchResult");
             const [div1,div2] = createSearchResultCard(output);
             searchResult.append(div1,div2)
